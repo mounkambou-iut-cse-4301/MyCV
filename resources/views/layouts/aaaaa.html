@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>How to enable or disable input using JavaScript</title>
+</head>
+
+<body>
+    <form>
+        <table>
+            <tr>
+                <td><input id="input1" class="myText" type="text" placeholder="Row 1" /></td>
+                <td><button type="button" onclick="toggleEnable('input1')"> Enable/Disable </button></td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        function toggleEnable(id) {
+            var textbox = document.getElementById(id);
+
+            if (textbox.disabled) {
+                // If disabled, do this 
+                document.getElementById(id).disabled = false;
+            } else {
+                // Enter code here
+                document.getElementById(id).disabled = true;
+            }
+        }
+
+    </script>
+</body>
+
+</html>

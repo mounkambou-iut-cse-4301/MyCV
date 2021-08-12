@@ -10,9 +10,9 @@
                 menu</a></div>
         <div class="d-lg-block collapse pb-2" id="account-menu">
             <h3 class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3">Dashboard</h3>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3" href="dashboard-orders.html">Information personelle</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="dashboard-sales.html">Expérience professionnelle</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="dashboard-sales.html">Éducation et formation</a>
+            <a class="d-flex align-items-center nav-link-style px-4 py-3" href="/info_personelle">Informations personelles</a>
+            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/experience_pro">Expérience professionnelle</a>
+            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/education_formation">Éducation et formation</a>
             <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="dashboard-sales.html">Compétences linguistiques</a>
             <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="dashboard-sales.html">Compétences numériques</a>
             <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="dashboard-sales.html">Activités sociales et politiques</a>

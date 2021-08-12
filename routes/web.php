@@ -21,3 +21,6 @@ Route::get('/', function () {
 Route::get('/dashboard',[CVController::class,'dashboard']);
 Route::get('/login',[CVController::class,'login']);
 Route::get('/register',[CVController::class,'register']);
+Route::get('/info_personelle',[CVController::class,'info_personelle']);
+Route::get('/experience_pro',[CVController::class,'experience_pro']);
+Route::get('/education_formation',[CVController::class,'education_formation']);
