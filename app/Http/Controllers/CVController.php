@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Utilisateur;
 
 class CVController extends Controller
 {
@@ -14,8 +16,35 @@ class CVController extends Controller
         return view('/layouts/login');
     }
 
-    function register(){
-        return view('/layouts/register');
+    function register(Request $req ){
+        if($req->isMethod('get')){
+            return view('/layouts/register');
+        }else if($req->isMethod('post')){
+           //Valider la requette
+           $req->validate([
+              'name'=>'required',
+              'email'=>'required|email|unique:utilisateurs',
+              'password'=>'required|min:5|max:12',
+              'confirm_password'=>'required|min:5|max:12'
+           ]);
+
+           if($req->password===$req->confirm_password){
+              //Ajouter les data dans le database
+           $user=new Utilisateur;
+           $user->name=$req->name;
+           $user->email=$req->email;
+           $user->password= Hash::make($req->password);
+           $save=$user->save();
+           if($save){
+              return back()->with('success','Le nouvel utilisateur a été ajouté avec succès dans la base de données');
+           }else{
+              return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+             }
+           }else{
+            return back()->with('fail',"Veillez confirmer votre mot de pass");
+           }
+        }
+       
     }
 
     function info_personelle(){

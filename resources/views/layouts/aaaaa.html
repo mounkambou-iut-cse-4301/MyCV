@@ -1,43 +1,80 @@
-<!-- Sidebar-->
-<div class="col-lg-4 mb-4 mb-lg-0">
-    <div class="bg-light rounded-3 shadow-lg">
-        <div class="px-4 py-4 mb-1 text-center"><img class="d-block rounded-circle mx-auto my-2"
-                src="img/dashboard/avatar/main.jpg" at="Amanda Wilson" width="110">
-            <h6 class="mb-0 pt-1">Amanda Wilson</h6><span class="text-muted fs-sm">@amanda_w</span>
-        </div>
-        <div class="d-lg-none px-4 pb-4 text-center"><a class="btn btn-primary px-5 mb-2" href="#account-menu"
-                data-bs-toggle="collapse"><i class="ai-menu me-2"></i>Account
-                menu</a></div>
-        <div class="d-lg-block collapse pb-2" id="account-menu">
-            <h3 class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3">Dashboard</h3>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3" href="/info_personelle">Informations personelles</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/experience_pro">Expérience professionnelle</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/education_formation">Éducation et formation</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="competence_ling">Compétences linguistiques</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/competence_num">Compétences numériques</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/activite_sociale_politique">Activités sociales et politiques</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/benevolat">Bénévolat</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/competence_matiere_orga">Compétences en matière d’organisation</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/competence_matiere_gestion">Compétences en matière de gestion et de direction</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/competence_interperso">Compétences interpersonnelles et en communication</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/conference_seminaire">Conférences et séminaires</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/loisir_interet">Loisirs et centres d’intérêt</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/oeuvre_creative">Œuvres créatives</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/permis_conduire">Permis de conduire</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/prix_distinction">Prix et distinctions honorifiques</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/projet">Projets</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/publication">Publications</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/recommandation">Recommandations</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/reseau_adhesion">Réseaux et adhésions</a>
-                
-            <h3 class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3">Account
-                settings</h3>
-            <a
-                class="d-flex align-items-center nav-link-style px-4 py-3 border-top"
-                href="/modifier_pass">Modifier le mot de passe</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top"
-                href="signin-illustration.html"><i class="ai-log-out fs-lg opacity-60 me-2"></i>Sign
-                out</a>
-        </div>
-    </div>
+@extends('layouts/master',['title'=>"S'inscrire"])
+
+@section('content')
+<div style="background-color:#737491;">
+    <main class="page-wrapper d-flex flex-column">
+        <!-- Navbar (Floating dark)-->
+        @include('layouts/_navbar')
+        <!-- Page content-->
+        <section class="container d-flex justify-content-center align-items-center pt-7 pb-4" style="flex: 1 0 auto;">
+            <div class="signin-form mt-3">
+                <div class="signin-form-inner">
+                    <!-- Sign up view-->
+                    <div class="view show">
+                        <h1 class="h2 text-center">S'inscrire</h1>
+                        <p class="fs-ms text-muted mb-4 text-center">L'inscription prend moins d'une minute mais vous
+                            donne un contrôle total sur vos commandes.</p>
+                        <form class="needs-validation" action="{{route('register')}}" method="post">
+                            @if(Session::get('success'))
+                            <div class="alert alert-success">
+                                {{Session::get('success')}}
+                            </div>
+                            @endif
+                            @if(Session::get('fail'))
+                            <div class="alert alert-danger">
+                                {{Session::get('fail')}}
+                            </div>
+                            @endif
+                            @csrf
+                            <div class="mb-3">
+                                <input class="form-control" type="text" placeholder="Nom Complet" name="name"
+                                    value="{{old('name')}}">
+                                <span class="text-danger">@error('name'){{$message}} @enderror</span>
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control" type="email" placeholder="Email" name="email"
+                                    value="{{old('email')}}">
+                                <span class="text-danger">@error('email'){{$message}} @enderror</span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="password-toggle w-100">
+                                    <input class="form-control" type="password" name="password"
+                                        placeholder="Mot de pass">
+                                    <label class="password-toggle-btn" aria-label="Show/hide password">
+                                        <input class="password-toggle-check" type="checkbox"><span
+                                            class="password-toggle-indicator"></span>
+                                    </label>
+                                </div>
+                                <span class="text-danger">@error('password'){{$message}} @enderror</span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="password-toggle w-100">
+                                    <input class="form-control" type="password" name="confirm_password"
+                                        placeholder="Confirmez le mot de pass">
+                                    <label class="password-toggle-btn" aria-label="Show/hide password">
+                                        <input class="password-toggle-check" type="checkbox"><span
+                                            class="password-toggle-indicator"></span>
+                                    </label>
+                                </div>
+                                <span class="text-danger">@error('confirm_password'){{$message}} @enderror</span>
+                            </div>
+                            <button class="btn btn-primary d-block w-100" type="submit">S'inscrire</button>
+                            <p class="fs-sm pt-3 mb-0 text-center">Avez-vous déjà un compte ? <a
+                                    href="{{route('login')}}" class='fw-medium'>Connexion</a></p>
+                        </form>
+                    </div>
+                    <div class="border-top text-center mt-4 pt-4">
+                        <p class="fs-sm fw-medium text-heading">Ou connectez vous avec</p><a
+                            class="btn-social bs-facebook bs-outline bs-lg mx-1 mb-2" href="#"><i
+                                class="ai-facebook"></i></a><a class="btn-social bs-twitter bs-outline bs-lg mx-1 mb-2"
+                            href="#"><i class="ai-twitter"></i></a><a
+                            class="btn-social bs-instagram bs-outline bs-lg mx-1 mb-2" href="#"><i
+                                class="ai-instagram"></i></a><a class="btn-social bs-google bs-outline bs-lg mx-1 mb-2"
+                            href="#"><i class="ai-google"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </div>
+@endsection
