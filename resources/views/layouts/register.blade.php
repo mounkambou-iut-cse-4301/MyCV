@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <button class="btn btn-primary d-block w-100" type="submit">Sign up</button>
-                            <p class="fs-sm pt-3 mb-0 text-center">Already have an account? <a href='/login'
+                            <p class="fs-sm pt-3 mb-0 text-center">Already have an account? <a href="{{route('login')}}"
                                     class='fw-medium' >Sign in</a></p>
                         </form>
                     </div>

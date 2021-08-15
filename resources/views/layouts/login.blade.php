@@ -36,7 +36,7 @@
                                 </div><a class="nav-link-style fs-ms" href="password-recovery.html">Forgot password?</a>
                             </div>
                             <button class="btn btn-primary d-block w-100" type="submit">Sign in</button>
-                            <p class="fs-sm pt-3 mb-0 text-center">Don't have an account? <a href='/register' class='fw-medium'
+                            <p class="fs-sm pt-3 mb-0 text-center">Don't have an account? <a href="{{route('register')}}" class='fw-medium'
                                     >Sign up</a></p>
                         </form>
                     </div>
