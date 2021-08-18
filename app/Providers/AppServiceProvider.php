@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Providers;
-
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-
+use App\Http\ViewComposers\SideComposer;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -21,8 +21,9 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot() 
     {
-        //
+        View::composer('dashboard', SideComposer::class);
+
     }
 }

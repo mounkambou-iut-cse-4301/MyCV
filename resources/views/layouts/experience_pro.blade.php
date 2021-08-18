@@ -39,77 +39,99 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="">
+                            <form action="{{route('experience_pro')}}" method="post">
                                 <div class="row">
                                     <h3
                                         class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3 text-md-center mb-2">
                                         Expérience professionnelle
                                     </h3>
+                                    @if(Session::get('success'))
+                                    <div class="alert alert-success">
+                                        {{Session::get('success')}}
+                                    </div>
+                                    @endif
+                                    @if(Session::get('fail'))
+                                    <div class="alert alert-danger">
+                                        {{Session::get('fail')}}
+                                    </div>
+                                    @endif
+                                    @csrf
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-fn">Fonction ou poste occupé(e)<sup
-                                                    class="text-danger ms-1">*</sup></label>
-                                            <input class="form-control" type="text" id="account-fn">
+                                            <label class="form-label px-0" for="account-fn">Fonction ou poste
+                                                occupé(e)<sup class="text-danger ms-1">*</sup></label>
+                                            <input class="form-control" name="poste" type="text" id="account-fn" required>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-ln">Employeur</label>
-                                            <input class="form-control" type="text" id="account-ln" >
+                                            <input class="form-control" name="employeur" type="text" id="account-ln">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-address">Localité</label>
-                                            <input class="form-control" type="text" id="account-address"
-                                                value="Madagascar">
+                                            <input class="form-control" name="localite" type="text" id="account-address">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-country">Pays</label>
-                                            <select class="form-select" id="account-country">
-                                                <option value>Sélectioner pays</option>
-                                                <option value="Argentina">Cameroun</option>
-                                                <option value="Belgium">Belgium</option>
-                                                <option value="France">France</option>
-                                                <option value="Germany">Germany</option>
-                                                <option value="Madagascar">Madagascar</option>
-                                                <option value="Spain">Spain</option>
-                                                <option value="UK">United Kingdom</option>
-                                                <option value="USA">USA</option>
-                                            </select>
+                                            <label class="form-label px-0" for="account-address">Pays</label>
+                                            <input class="form-control" name="pays" type="text" id="account-address">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="date">De</label>
-                                            <input class="form-control" type="date" id="date" value="21/202/1999">
+                                            <input class="form-control" type="date" name="debut_date" id="date">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="date">Au</label>
-                                            <input class="form-control" type="date" id="date" value="21/202/1999">
+                                            <input class="form-control" name="fin_date" type="date" id="date">
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label" for="cont-message">Principales activités et responsabilités</label>
-                                            <textarea class="form-control" id="cont-message" rows="5"
-                                                required></textarea>
+                                            <label class="form-label" for="cont-message">Principales activités et
+                                                responsabilités</label>
+                                            <textarea class="form-control" name="description" id="cont-message" rows="5"
+                                                ></textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <hr class="mt-2 mb-4">
                                         <div class="d-flex flex-wrap justify-content-end align-items-center">
-                                            <button class="btn btn-primary mt-3 mt-sm-0" type="button"><i
+                                            <button class="btn btn-primary mt-3 mt-sm-0" type="submit"><i
                                                     class="ai-save fs-lg me-2"></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                            <div class="table-responsive fs-md mt-5">
+                                <table class="table table-hover mb-0">
+                                    <tbody>
+                                        @foreach($info as $inf)
+                                        <tr>
+                                            <td class="py-3 align-middle">
+                                                <p class="fw-bold">{{$inf->poste}}</p>
+                                                <span class="fw-bold">{{$inf->employeur}}, {{$inf->localite}}-{{$inf->pays}}</span>
+                                                <p>{{$inf->description}}</p>
+                                            </td>
+                                            <td class="py-3 align-middle">{{$inf->debut_date}}-{{$inf->fin_date}}</td>
+                                            <td class="py-3 align-middle"><a class="nav-link-style text-danger" href="/delete_exp_pro/{{$inf->id}}"
+                                                    data-bs-toggle="tooltip" title="Remove">
+                                                    <div class="ai-trash-2"></div>
+                                                </a></td>
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

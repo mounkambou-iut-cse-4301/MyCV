@@ -11,22 +11,28 @@
                 <div class="signin-form-inner">
                     <!-- Sign in view-->
                     <div class="view show">
-                        <h1 class="h2 text-center">Sign in</h1>
-                        <p class="fs-ms text-muted mb-4 text-center">Sign in to your account using email and password
-                            provided during registration.</p>
-                        <form class="needs-validation" novalidate>
-                            <div class="input-group mb-3"><i
-                                    class="ai-mail position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                                <input class="form-control rounded" type="email" placeholder="Email" required>
+                        <h1 class="h2 text-center">Connexion</h1>
+                        <p class="fs-ms text-muted mb-4 text-center">Connectez-vous à votre compte en utilisant l'e-mail et le mot de passe fournis lors de l'inscription.</p>
+                        <form class="needs-validation" action="{{route('login')}}" method="post">
+                            @if(Session::get('fail'))
+                            <div class="alert alert-danger">
+                                {{Session::get('fail')}}
                             </div>
-                            <div class="input-group mb-3"><i
-                                    class="ai-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                            @endif
+                            @csrf
+                            <div class="mb-3">
+                                <input class="form-control" type="email" placeholder="Email" name="email"
+                                    value="{{old('email')}}">
+                                <span class="text-danger">@error('email'){{$message}} @enderror</span>
+                            </div>
+                            <div class="input-group mb-3">
                                 <div class="password-toggle w-100">
-                                    <input class="form-control" type="password" placeholder="Password" required>
+                                    <input class="form-control" name="password" type="password" placeholder="Mot de pass">
                                     <label class="password-toggle-btn" aria-label="Show/hide password">
                                         <input class="password-toggle-check" type="checkbox"><span
                                             class="password-toggle-indicator"></span>
                                     </label>
+                                    <span class="text-danger">@error('password'){{$message}} @enderror</span>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-3 pb-1">
@@ -35,13 +41,13 @@
                                     <label class="form-check-label" for="keep-signed-2">Keep me signed in</label>
                                 </div><a class="nav-link-style fs-ms" href="password-recovery.html">Forgot password?</a>
                             </div>
-                            <button class="btn btn-primary d-block w-100" type="submit">Sign in</button>
-                            <p class="fs-sm pt-3 mb-0 text-center">Don't have an account? <a href="{{route('register')}}" class='fw-medium'
-                                    >Sign up</a></p>
+                            <button class="btn btn-primary d-block w-100" type="submit">Connexion</button>
+                            <p class="fs-sm pt-3 mb-0 text-center">Vous n'avez pas de compte ? <a
+                                    href="{{route('register')}}" class='fw-medium'>S'inscrire</a></p>
                         </form>
                     </div>
                     <div class="border-top text-center mt-4 pt-4">
-                        <p class="fs-sm fw-medium text-heading">Or sign in with</p><a
+                        <p class="fs-sm fw-medium text-heading">Ou connectez vous avec</p><a
                             class="btn-social bs-facebook bs-outline bs-lg mx-1 mb-2" href="#"><i
                                 class="ai-facebook"></i></a><a class="btn-social bs-twitter bs-outline bs-lg mx-1 mb-2"
                             href="#"><i class="ai-twitter"></i></a><a

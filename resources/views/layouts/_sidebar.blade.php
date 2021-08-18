@@ -11,13 +11,10 @@
 
         <div class="d-lg-block collapse pb-2" id="account-menu">
             <h3 class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3">Dashboard</h3>
-
-            <form action="{{route('ajouter_section')}}" method="post">
-            @csrf
-                <p class=" m-2"> Ajouter une nouvelle section</p>
                 <div class="d-md-flex justify-content-between align-items-center pt-0 pb-0 mt-0 m-2 mb-0">
-                    <div class="d-flex justify-content-center align-items-center mb-1">
-                        <select name="section" class="form-select me-2" style="width: 100%;">
+                    <div class="d-flex justify-content-center align-items-center mb-1 ">
+                        <select name="form" onchange="location = this.value;" class="form-select me-2 " style="width: 100%;">
+                        <option value>Ajouter une nouvelle section</option>
                             <option value="info_personelle">Informations personelles</option>
                             <option value="experience_pro">Expérience professionnelle</option>
                             <option value="education_formation">Éducation et formation</option>
@@ -43,19 +40,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="d-flex flex-wrap justify-content-end align-items-center">
-                    <button class="btn btn-primary mt-3 m-3 mt-sm-0" type="submit"><i
-                            class="ai-save fs-lg me-2"></i>Ajouter une section</button>
-                </div>
-            </form>
-            <h3 class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3 mt-2">Account
-                settings</h3>
+               
+            <h3 class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3 mt-2">Compte paramètres</h3>
             <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="/modifier_pass">Modifier le
                 mot
                 de passe</a>
-            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="signin-illustration.html"><i
-                    class="ai-log-out fs-lg opacity-60 me-2"></i>Sign
-                out</a>
+            <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="{{route('logout')}}"><i
+                    class="ai-log-out fs-lg opacity-60 me-2"></i>Déconnexion</a>
         </div>
     </div>
 </div>
