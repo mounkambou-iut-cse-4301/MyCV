@@ -52,7 +52,11 @@ Route::match(['get','post'],'/competence_matiere_gestion',[CVController::class,'
 Route::get('/delete_comp_gestion/{id?}', [CVController::class,'delete_comp_gestion'])->name('delete_comp_gestion');
 
 Route::match(['get','post'],'/competence_interperso',[CVController::class,'competence_interperso'])->name('competence_interperso');
+Route::get('/delete_comp_interperso/{id?}', [CVController::class,'delete_comp_interperso'])->name('delete_comp_interperso');
+
 Route::match(['get','post'],'/conference_seminaire',[CVController::class,'conference_seminaire'])->name('conference_seminaire');
+Route::get('/delete_conf_semi/{id?}', [CVController::class,'delete_conf_semi'])->name('delete_conf_semi');
+
 Route::match(['get','post'],'/loisir_interet',[CVController::class,'loisir_interet'])->name('loisir_interet');
 Route::match(['get','post'],'/oeuvre_creative',[CVController::class,'oeuvre_creative'])->name('oeuvre_creative');
 Route::match(['get','post'],'/permis_conduire',[CVController::class,'permis_conduire'])->name('permis_conduire');

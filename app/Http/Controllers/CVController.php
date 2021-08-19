@@ -14,6 +14,8 @@ use App\Models\ActiviteSocialePolitique;
 use App\Models\Benevolat;
 use App\Models\CompetenceOrganisation;
 use App\Models\CompetenceGestion;
+use App\Models\CompetenceInterpersonnelle;
+use App\Models\ConferenceSeminaire;
 use DB;
 
 class CVController extends Controller
@@ -492,14 +494,84 @@ class CVController extends Controller
     }
 
 
+    //Competence Interpersonnelle
 
-    function competence_interperso(){
-        return view('/layouts/competence_interperso');
+    function competence_interperso(Request $req){
+        if($req->isMethod('get')){
+            $info= CompetenceInterpersonnelle::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/competence_interperso')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date > $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new CompetenceInterpersonnelle;
+                $info->titre=$req->titre;
+                $info->lieu=$req->lieu;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
 
-    function conference_seminaire(){
-        return view('/layouts/conference_seminaire');
+    function delete_comp_interperso($id){
+       
+        $delete=CompetenceInterpersonnelle::where('id',$id)->delete();
+        return redirect()->back();
     }
+
+
+    //Conference Seminaire
+    function conference_seminaire(Request $req){
+        if($req->isMethod('get')){
+            $info= ConferenceSeminaire::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/conference_seminaire')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date > $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new ConferenceSeminaire;
+                $info->titre=$req->titre;
+                $info->lieu=$req->lieu;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
+    }
+
+    function delete_conf_semi($id){
+       
+        $delete=ConferenceSeminaire::where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+
+
     function loisir_interet(){
         return view('/layouts/loisir_interet');
     }
