@@ -86,7 +86,7 @@
                                         <div class="mb-3 pb-1">
                                             <label class="form-label" for="cont-message">Description</label>
                                             <textarea class="form-control" name="description" placeholder="Saisir ici la description..." id="cont-message" rows="5"
-                                                required></textarea>
+                                                ></textarea>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">

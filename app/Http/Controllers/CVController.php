@@ -12,6 +12,8 @@ use App\Models\CompetenceLinguistique;
 use App\Models\CompetenceNumerique;
 use App\Models\ActiviteSocialePolitique;
 use App\Models\Benevolat;
+use App\Models\CompetenceOrganisation;
+use App\Models\CompetenceGestion;
 use DB;
 
 class CVController extends Controller
@@ -204,7 +206,7 @@ class CVController extends Controller
             $req->validate([
                 'poste'=>'required',
              ]);
-             if($req->debut_date >= $req->fin_date){
+             if($req->debut_date > $req->fin_date){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new ExperienceProfessionnelle;
@@ -244,7 +246,7 @@ class CVController extends Controller
             $req->validate([
                 'qualification'=>'required',
              ]);
-             if($req->debut_date >= $req->fin_date){
+             if($req->debut_date > $req->fin_date){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new EducationFormation;
@@ -350,7 +352,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date >= $req->fin_date){
+             if($req->debut_date > $req->fin_date){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new ActiviteSocialePolitique;
@@ -388,7 +390,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date >= $req->fin_date){
+             if($req->debut_date > $req->fin_date){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new Benevolat;
@@ -414,15 +416,83 @@ class CVController extends Controller
         return redirect()->back();
     }
 
+  //Competence Organisation
 
-
-    function competence_matiere_orga(){
-        return view('/layouts/competence_matiere_orga');
+    function competence_matiere_orga(Request $req){
+        if($req->isMethod('get')){
+            $info= CompetenceOrganisation::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/competence_matiere_orga')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date > $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new CompetenceOrganisation;
+                $info->titre=$req->titre;
+                $info->lieu=$req->lieu;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
 
-    function competence_matiere_gestion(){
-        return view('/layouts/competence_matiere_gestion');
+    function delete_comp_organisation($id){
+       
+        $delete=CompetenceOrganisation::where('id',$id)->delete();
+        return redirect()->back();
     }
+
+    //Competence Gestion
+    function competence_matiere_gestion(Request $req){
+        if($req->isMethod('get')){
+            $info= CompetenceGestion::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/competence_matiere_gestion')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date > $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new CompetenceGestion;
+                $info->titre=$req->titre;
+                $info->lieu=$req->lieu;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
+    }
+
+    function delete_comp_gestion($id){
+       
+        $delete=CompetenceGestion::where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+
+
     function competence_interperso(){
         return view('/layouts/competence_interperso');
     }

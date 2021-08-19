@@ -46,7 +46,11 @@ Route::match(['get','post'],'/benevolat',[CVController::class,'benevolat'])->nam
 Route::get('/delete_benevolat/{id?}', [CVController::class,'delete_benevolat'])->name('delete_benevolat');
 
 Route::match(['get','post'],'/competence_matiere_orga',[CVController::class,'competence_matiere_orga'])->name('competence_matiere_orga');
+Route::get('/delete_comp_organisation/{id?}', [CVController::class,'delete_comp_organisation'])->name('delete_comp_organisation');
+
 Route::match(['get','post'],'/competence_matiere_gestion',[CVController::class,'competence_matiere_gestion'])->name('competence_matiere_gestion');
+Route::get('/delete_comp_gestion/{id?}', [CVController::class,'delete_comp_gestion'])->name('delete_comp_gestion');
+
 Route::match(['get','post'],'/competence_interperso',[CVController::class,'competence_interperso'])->name('competence_interperso');
 Route::match(['get','post'],'/conference_seminaire',[CVController::class,'conference_seminaire'])->name('conference_seminaire');
 Route::match(['get','post'],'/loisir_interet',[CVController::class,'loisir_interet'])->name('loisir_interet');
