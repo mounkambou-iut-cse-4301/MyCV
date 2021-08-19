@@ -39,97 +39,70 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="">
+                            <form action="{{route('competence_ling')}}" method="post">
                                 <div class="row">
                                     <h3
                                         class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3 text-md-center mb-2">
                                         Compétences linguistiques
                                     </h3>
+                                    @if(Session::get('success'))
+                                    <div class="alert alert-success">
+                                        {{Session::get('success')}}
+                                    </div>
+                                    @endif
+                                    @if(Session::get('fail'))
+                                    <div class="alert alert-danger">
+                                        {{Session::get('fail')}}
+                                    </div>
+                                    @endif
+                                    @csrf
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-fn">Langue 1</label>
-                                            <input class="form-control" type="text" id="account-fn">
+                                            <label class="form-label px-0" for="account-fn">Langue</label>
+                                            <input class="form-control" type="text" required name="langue" id="account-fn">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-country">Niveau</label>
-                                            <select class="form-select" id="account-country">
+                                            <select class="form-select" id="account-country" required name="niveau">
                                                 <option value>Sélectioner niveau</option>
-                                                <option value="">Débutant(e)</option>
-                                                <option value="">Intermédiaire</option>
-                                                <option value="">Bien</option>
-                                                <option value="">Très bien</option>
-                                                <option value="">Courant(e)</option>
-                                            </select>
-                                        </div>
-                                    </div><hr>
-                                    <div class="col-sm-6">
-                                        <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-fn">Langue 2</label>
-                                            <input class="form-control" type="text" id="account-fn">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-country">Niveau</label>
-                                            <select class="form-select" id="account-country">
-                                                <option value>Sélectioner niveau</option>
-                                                <option value="">Débutant(e)</option>
-                                                <option value="">Intermédiaire</option>
-                                                <option value="">Bien</option>
-                                                <option value="">Très bien</option>
-                                                <option value="">Courant(e)</option>
-                                            </select>
-                                        </div>
-                                    </div><hr>
-                                    <div class="col-sm-6">
-                                        <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-fn">Langue 3</label>
-                                            <input class="form-control" type="text" id="account-fn">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-country">Niveau</label>
-                                            <select class="form-select" id="account-country">
-                                                <option value>Sélectioner niveau</option>
-                                                <option value="">Débutant(e)</option>
-                                                <option value="">Intermédiaire</option>
-                                                <option value="">Bien</option>
-                                                <option value="">Très bien</option>
-                                                <option value="">Courant(e)</option>
-                                            </select>
-                                        </div>
-                                    </div><hr>
-                                    <div class="col-sm-6">
-                                        <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-fn">Langue 4</label>
-                                            <input class="form-control" type="text" id="account-fn">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-country">Niveau</label>
-                                            <select class="form-select" id="account-country">
-                                                <option value>Sélectioner niveau</option>
-                                                <option value="">Débutant(e)</option>
-                                                <option value="">Intermédiaire</option>
-                                                <option value="">Bien</option>
-                                                <option value="">Très bien</option>
-                                                <option value="">Courant(e)</option>
+                                                <option value="Débutant(e)">Débutant(e)</option>
+                                                <option value="Intermédiaire">Intermédiaire</option>
+                                                <option value="Bien">Bien</option>
+                                                <option value="Très bien">Très bien</option>
+                                                <option value="Courant(e)">Courant(e)</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <hr class="mt-2 mb-4">
                                         <div class="d-flex flex-wrap justify-content-end align-items-center">
-                                            <button class="btn btn-primary mt-3 mt-sm-0" type="button"><i
+                                            <button class="btn btn-primary mt-3 mt-sm-0" type="sumit"><i
                                                     class="ai-save fs-lg me-2"></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                            <div class="table-responsive fs-md mt-5">
+                                <table class="table table-hover mb-0">
+                                    <tbody>
+                                        @foreach($info as $inf)
+                                        <tr>
+                                            <td class="py-3 align-middle">
+                                                <span class="fw-bold">{{$inf->langue}}</span>
+                                            </td>
+                                            <td class="py-3 align-middle">{{$inf->niveau}}</td>
+                                            <td class="py-3 align-middle"><a class="nav-link-style text-danger" href="/delete_comp_ling/{{$inf->id}}  "
+                                                    data-bs-toggle="tooltip" title="Remove">
+                                                    <div class="ai-trash-2"></div>
+                                                </a></td>
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

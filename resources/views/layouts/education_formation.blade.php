@@ -39,87 +39,104 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="">
+                            <form action="{{route('education_formation')}}" method="post">
                                 <div class="row">
                                     <h3
                                         class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3 text-md-center mb-2">
                                         Éducation et formation
                                     </h3>
+                                    @if(Session::get('success'))
+                                    <div class="alert alert-success">
+                                        {{Session::get('success')}}
+                                    </div>
+                                    @endif
+                                    @if(Session::get('fail'))
+                                    <div class="alert alert-danger">
+                                        {{Session::get('fail')}}
+                                    </div>
+                                    @endif
+                                    @csrf
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-fn">Intitulé de la qualification délivrée<sup
                                                     class="text-danger ms-1">*</sup></label>
-                                            <input class="form-control" type="text" id="account-fn">
+                                            <input class="form-control" name="qualification" type="text" id="account-fn">
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-ln">Orgasnismes d'éducation et de formation</label>
-                                            <input class="form-control" type="text" id="account-ln" >
+                                            <input class="form-control" name="organisme" type="text" id="account-ln" >
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-ln">Adresse</label>
-                                            <input class="form-control" type="text" id="account-ln" >
+                                            <input class="form-control" name="adresse" type="text" id="account-ln" >
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-zip">Code Postal</label>
-                                            <input class="form-control" type="text" id="account-zip">
+                                            <input class="form-control" name="code_postal" type="text" id="account-zip">
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-address">Ville</label>
+                                            <label class="form-label px-0" for="account-address">Pays</label>
                                             <input class="form-control" type="text" id="account-address"
-                                                value="Madagascar">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-country">Pays</label>
-                                            <select class="form-select" id="account-country">
-                                                <option value>Sélectioner pays</option>
-                                                <option value="Argentina">Cameroun</option>
-                                                <option value="Belgium">Belgium</option>
-                                                <option value="France">France</option>
-                                                <option value="Germany">Germany</option>
-                                                <option value="Madagascar">Madagascar</option>
-                                                <option value="Spain">Spain</option>
-                                                <option value="UK">United Kingdom</option>
-                                                <option value="USA">USA</option>
-                                            </select>
+                                            name="pays">
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="site_web">Site web</label>
-                                            <input class="form-control" type="text" id="site_web">
+                                            <input class="form-control"  name="site_web" type="text" id="site_web">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="date">De</label>
-                                            <input class="form-control" type="date" id="date" value="21/202/1999">
+                                            <input class="form-control" name="debut_date"  type="date" id="date">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="date">Au</label>
-                                            <input class="form-control" type="date" id="date" value="21/202/1999">
+                                            <input class="form-control" name="fin_date" type="date" id="date">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <hr class="mt-2 mb-4">
                                         <div class="d-flex flex-wrap justify-content-end align-items-center">
-                                            <button class="btn btn-primary mt-3 mt-sm-0" type="button"><i
+                                            <button class="btn btn-primary mt-3 mt-sm-0" type="submit"><i
                                                     class="ai-save fs-lg me-2"></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                            <div class="table-responsive fs-md mt-5">
+                                <table class="table table-hover mb-0">
+                                    <tbody>
+                                        @foreach($info as $inf)
+                                        <tr>
+                                            <td class="py-3 align-middle">
+                                                <span class="fw-bold">{{$inf->qualification}}</span><br>
+                                                <span >{{$inf->organisme}},{{$inf->ville}}-{{$inf->pays}}</span>
+                                                <a href="{{$inf->site_web}}" target="_blank">{{$inf->site_web}}</a>
+
+                                            </td>
+                                            <td class="py-3 align-middle">{{$inf->debut_date}}-{{$inf->fin_date}}</td>
+                                            <td class="py-3 align-middle"><a class="nav-link-style text-danger" href="/delete_edu_form/{{$inf->id}}"
+                                                    data-bs-toggle="tooltip" title="Remove">
+                                                    <div class="ai-trash-2"></div>
+                                                </a></td>
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

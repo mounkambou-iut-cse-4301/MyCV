@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Utilisateur;
 use App\Models\InformationPersonelle;
 use App\Models\ExperienceProfessionnelle;
+use App\Models\EducationFormation;
+use App\Models\CompetenceLinguistique;
 use DB;
 
 class CVController extends Controller
@@ -187,6 +189,8 @@ class CVController extends Controller
         }
         
     }
+
+
     function experience_pro(Request $req){
         if($req->isMethod('get')){
             $info= ExperienceProfessionnelle::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
@@ -225,15 +229,81 @@ class CVController extends Controller
     }
 
 
+      //Education et Formation
 
-
-    function education_formation(){
-        return view('/layouts/education_formation');
+    function education_formation( Request $req){
+        if($req->isMethod('get')){
+            $info= EducationFormation::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/education_formation')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'qualification'=>'required',
+             ]);
+             if($req->debut_date >= $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new EducationFormation;
+                $info->qualification=$req->qualification;
+                $info->organisme=$req->organisme;
+                $info->pays=$req->pays;
+                $info->site_web=$req->site_web;
+                $info->adresse=$req->adresse;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->code_postal=$req->code_postal;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
+    }
+    function delete_edu_form($id){
+       
+        $delete=EducationFormation::where('id',$id)->delete();
+        return redirect()->back();
     }
 
-    function competence_ling(){
-        return view('/layouts/competence_ling');
+
+
+    //Competence Linguistique
+
+    function competence_ling( Request $req){
+        if($req->isMethod('get')){
+            $info= CompetenceLinguistique::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/competence_ling')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'langue'=>'required',
+                'niveau'=>'required',
+             ]);
+             $info= new CompetenceLinguistique;
+                $info->langue=$req->langue;
+                $info->niveau=$req->niveau;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
+
+    function delete_comp_ling($id){
+       
+        $delete=CompetenceLinguistique::where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+
+
     function competence_num(){
         return view('/layouts/competence_num');
     }

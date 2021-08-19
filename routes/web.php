@@ -31,7 +31,11 @@ Route::match(['get','post'],'/experience_pro',[CVController::class,'experience_p
 Route::get('/delete_exp_pro/{id?}', [CVController::class,'delete_exp_pro'])->name('delete_exp_pro');
 
 Route::match(['get','post'],'/education_formation',[CVController::class,'education_formation'])->name('education_formation');
+Route::get('/delete_edu_form/{id?}', [CVController::class,'delete_edu_form'])->name('delete_edu_form');
+
 Route::match(['get','post'],'/competence_ling',[CVController::class,'competence_ling'])->name('competence_ling');
+Route::get('/delete_comp_ling/{id?}', [CVController::class,'delete_comp_ling'])->name('delete_comp_ling');
+
 Route::match(['get','post'],'/competence_num',[CVController::class,'competence_num'])->name('competence_num');
 Route::match(['get','post'],'/activite_sociale_politique',[CVController::class,'activite_sociale_politique'])->name('activite_sociale_politique');
 Route::match(['get','post'],'/benevolat',[CVController::class,'benevolat'])->name('benevolat');
