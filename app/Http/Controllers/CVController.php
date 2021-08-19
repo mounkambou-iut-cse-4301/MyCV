@@ -9,6 +9,9 @@ use App\Models\InformationPersonelle;
 use App\Models\ExperienceProfessionnelle;
 use App\Models\EducationFormation;
 use App\Models\CompetenceLinguistique;
+use App\Models\CompetenceNumerique;
+use App\Models\ActiviteSocialePolitique;
+use App\Models\Benevolat;
 use DB;
 
 class CVController extends Controller
@@ -303,17 +306,116 @@ class CVController extends Controller
     }
 
 
+    //Competence Numerique
 
-    function competence_num(){
-        return view('/layouts/competence_num');
+    function competence_num(Request $req){
+        if($req->isMethod('get')){
+            $info= CompetenceNumerique::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/competence_num')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'groupe'=>'required',
+                'liste'=>'required',
+             ]);
+             $info= new CompetenceNumerique;
+                $info->groupe=$req->groupe;
+                $info->liste=$req->liste;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
 
-    function activite_sociale_politique(){
-        return view('/layouts/activite_sociale_politique');
+    function delete_comp_num($id){
+       
+        $delete=CompetenceNumerique::where('id',$id)->delete();
+        return redirect()->back();
     }
-    function benevolat(){
-        return view('/layouts/benevolat');
+
+
+    //ActiviteSociale Politique
+    function activite_sociale_politique(Request $req){
+        if($req->isMethod('get')){
+            $info= ActiviteSocialePolitique::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/activite_sociale_politique')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date >= $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new ActiviteSocialePolitique;
+                $info->titre=$req->titre;
+                $info->lieu=$req->lieu;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
+
+    function delete_act_soc_pol($id){
+       
+        $delete=ActiviteSocialePolitique::where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+    //Benevolat
+
+    function benevolat(Request $req){
+        if($req->isMethod('get')){
+            $info= Benevolat::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/benevolat')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date >= $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new Benevolat;
+                $info->titre=$req->titre;
+                $info->lieu=$req->lieu;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
+    }
+
+    function delete_benevolat($id){
+       
+        $delete=Benevolat::where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+
+
     function competence_matiere_orga(){
         return view('/layouts/competence_matiere_orga');
     }
