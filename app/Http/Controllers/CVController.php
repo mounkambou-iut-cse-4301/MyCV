@@ -18,6 +18,8 @@ use App\Models\CompetenceInterpersonnelle;
 use App\Models\ConferenceSeminaire;
 use App\Models\LoisirInteret;
 use App\Models\OeuvreCreative;
+use App\Models\PrixDistinction;
+use App\Models\Projet;
 use DB;
 
 class CVController extends Controller
@@ -639,16 +641,84 @@ class CVController extends Controller
         return redirect()->back();
     }
 
+
     function permis_conduire(){
         return view('/layouts/permis_conduire');
     }
-    function prix_distinction(){
-        return view('/layouts/prix_distinction');
+
+   
+    //Prix Distinction
+    function prix_distinction(Request $req){
+        if($req->isMethod('get')){
+            $info= PrixDistinction::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/prix_distinction')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+            
+             $info= new PrixDistinction;
+                $info->titre=$req->titre;
+                $info->etablissement=$req->etablissement;
+                $info->date=$req->date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
 
-    function projet(){
-        return view('/layouts/projet');
+    function delete_prix_distinction($id){
+       
+        $delete=PrixDistinction::where('id',$id)->delete();
+        return redirect()->back();
     }
+
+    //Projet
+    function projet(Request $req){
+        if($req->isMethod('get')){
+            $info= Projet::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/projet')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date > $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new Projet;
+                $info->titre=$req->titre;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
+    }
+
+    function delete_projet($id){
+       
+        $delete=Projet::where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+
+
     function publication(){
         return view('/layouts/publication');
     }

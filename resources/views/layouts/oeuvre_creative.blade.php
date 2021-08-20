@@ -104,7 +104,7 @@
                                         <tr>
                                             <td class="py-3 align-middle">
                                                 <p class="fw-bold">{{$inf->titre}}</p>
-                                                <span>{{$inf->description}}</span>
+                                                <span>{{$inf->description}}</span><br>
                                                 <a href="{{$inf->lien}}" target="_blank">{{$inf->lien}}</a>
                                             </td>
                                             <td class="py-3 align-middle">{{$inf->debut_date}}-{{$inf->fin_date}}</td>

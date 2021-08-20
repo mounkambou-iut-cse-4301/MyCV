@@ -65,7 +65,11 @@ Route::get('/delete_oeuvre_creative/{id?}', [CVController::class,'delete_oeuvre_
 
 Route::match(['get','post'],'/permis_conduire',[CVController::class,'permis_conduire'])->name('permis_conduire');
 Route::match(['get','post'],'/prix_distinction',[CVController::class,'prix_distinction'])->name('prix_distinction');
+Route::get('/delete_prix_distinction/{id?}', [CVController::class,'delete_prix_distinction'])->name('delete_prix_distinction');
+
 Route::match(['get','post'],'/projet',[CVController::class,'projet'])->name('projet');
+Route::get('/delete_projet/{id?}', [CVController::class,'delete_projet'])->name('delete_projet');
+
 Route::match(['get','post'],'/publication',[CVController::class,'publication'])->name('publication');
 Route::match(['get','post'],'/recommandation',[CVController::class,'recommandation'])->name('recommandation');
 Route::match(['get','post'],'/reseau_adhesion',[CVController::class,'reseau_adhesion'])->name('reseau_adhesion');
