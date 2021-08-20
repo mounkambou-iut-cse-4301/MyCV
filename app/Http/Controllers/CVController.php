@@ -16,6 +16,8 @@ use App\Models\CompetenceOrganisation;
 use App\Models\CompetenceGestion;
 use App\Models\CompetenceInterpersonnelle;
 use App\Models\ConferenceSeminaire;
+use App\Models\LoisirInteret;
+use App\Models\OeuvreCreative;
 use DB;
 
 class CVController extends Controller
@@ -571,12 +573,70 @@ class CVController extends Controller
     }
 
 
-
-    function loisir_interet(){
-        return view('/layouts/loisir_interet');
+    //Loisir Interet
+    function loisir_interet(Request $req){
+        if($req->isMethod('get')){
+            $info= LoisirInteret::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/loisir_interet')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'description'=>'required',
+             ]);
+             $info= new LoisirInteret;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
-    function oeuvre_creative(){
-        return view('/layouts/oeuvre_creative');
+
+    function delete_loisir($id){
+       
+        $delete=LoisirInteret::where('id',$id)->delete();
+        return redirect()->back();
+    }  
+
+    //OeuvreCreative
+    function oeuvre_creative(Request $req){
+        if($req->isMethod('get')){
+            $info= OeuvreCreative::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/oeuvre_creative')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date > $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new OeuvreCreative;
+                $info->titre=$req->titre;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
+    }
+
+    function delete_oeuvre_creative($id){
+       
+        $delete=OeuvreCreative::where('id',$id)->delete();
+        return redirect()->back();
     }
 
     function permis_conduire(){

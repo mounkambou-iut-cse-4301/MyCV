@@ -58,7 +58,11 @@ Route::match(['get','post'],'/conference_seminaire',[CVController::class,'confer
 Route::get('/delete_conf_semi/{id?}', [CVController::class,'delete_conf_semi'])->name('delete_conf_semi');
 
 Route::match(['get','post'],'/loisir_interet',[CVController::class,'loisir_interet'])->name('loisir_interet');
+Route::get('/delete_loisir/{id?}', [CVController::class,'delete_loisir'])->name('delete_loisir');
+
 Route::match(['get','post'],'/oeuvre_creative',[CVController::class,'oeuvre_creative'])->name('oeuvre_creative');
+Route::get('/delete_oeuvre_creative/{id?}', [CVController::class,'delete_oeuvre_creative'])->name('delete_oeuvre_creative');
+
 Route::match(['get','post'],'/permis_conduire',[CVController::class,'permis_conduire'])->name('permis_conduire');
 Route::match(['get','post'],'/prix_distinction',[CVController::class,'prix_distinction'])->name('prix_distinction');
 Route::match(['get','post'],'/projet',[CVController::class,'projet'])->name('projet');
