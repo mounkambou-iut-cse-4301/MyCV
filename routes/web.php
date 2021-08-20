@@ -71,6 +71,8 @@ Route::match(['get','post'],'/projet',[CVController::class,'projet'])->name('pro
 Route::get('/delete_projet/{id?}', [CVController::class,'delete_projet'])->name('delete_projet');
 
 Route::match(['get','post'],'/publication',[CVController::class,'publication'])->name('publication');
+Route::get('/delete_publication/{id?}', [CVController::class,'delete_publication'])->name('delete_publication');
+
 Route::match(['get','post'],'/recommandation',[CVController::class,'recommandation'])->name('recommandation');
 Route::match(['get','post'],'/reseau_adhesion',[CVController::class,'reseau_adhesion'])->name('reseau_adhesion');
 Route::match(['get','post'],'/modifier_pass',[CVController::class,'modifier_pass'])->name('modifier_pass');

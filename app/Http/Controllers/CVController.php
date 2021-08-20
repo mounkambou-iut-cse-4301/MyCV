@@ -19,6 +19,7 @@ use App\Models\ConferenceSeminaire;
 use App\Models\LoisirInteret;
 use App\Models\OeuvreCreative;
 use App\Models\PrixDistinction;
+use App\Models\Publication;
 use App\Models\Projet;
 use DB;
 
@@ -718,10 +719,45 @@ class CVController extends Controller
     }
 
 
-
-    function publication(){
-        return view('/layouts/publication');
+    //Publication
+    function publication(Request $req){
+        if($req->isMethod('get')){
+            $info=Publication::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/publication')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date > $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new Publication;
+                $info->titre=$req->titre;
+                $info->date=$req->date;
+                $info->url=$req->url;
+                $info->reference=$req->reference;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
+
+    function delete_publication($id){
+       
+        $delete=Publication::where('id',$id)->delete();
+        return redirect()->back();
+    }   
+
+
+
     function recommandation(){
         return view('/layouts/recommandation');
     }
