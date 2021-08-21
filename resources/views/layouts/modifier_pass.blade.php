@@ -39,18 +39,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="">
+                            <form action="{{route('modifier_pass')}}" method="post">
                                 <div class="row">
                                     <h3
                                         class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3 text-md-center mb-2">
                                         Modifiez votre mot de pass
                                     </h3>
+                                    @if(Session::get('success'))
+                                    <div class="alert alert-success">
+                                        {{Session::get('success')}}
+                                    </div>
+                                    @endif
+                                    @if(Session::get('fail'))
+                                    <div class="alert alert-danger">
+                                        {{Session::get('fail')}}
+                                    </div>
+                                    @endif
+                                    @csrf
                                     <div class="col-sm-12">
                                         <div class="input-group mb-3"><i
                                                 class="ai-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
                                             <div class="password-toggle w-100">
                                                 <input class="form-control" type="password"
-                                                    placeholder="Entrez votre mot de pass" required>
+                                                    placeholder="Entrez votre mot de pass" name="pass1" required>
                                                 <label class="password-toggle-btn" aria-label="Show/hide password">
                                                     <input class="password-toggle-check" type="checkbox"><span
                                                         class="password-toggle-indicator"></span>
@@ -63,11 +74,13 @@
                                                 class="ai-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
                                             <div class="password-toggle w-100">
                                                 <input class="form-control" type="password"
-                                                    placeholder="Nouveau mot de pass" required>
+                                                    placeholder="Nouveau mot de pass" name="pass2" required>
                                                 <label class="password-toggle-btn" aria-label="Show/hide password">
                                                     <input class="password-toggle-check" type="checkbox"><span
                                                         class="password-toggle-indicator"></span>
                                                 </label>
+                                                <span class="text-danger">@error('pass2'){{$message}} @enderror</span>
+
                                             </div>
                                         </div>
                                     </div>
@@ -76,22 +89,24 @@
                                                 class="ai-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
                                             <div class="password-toggle w-100">
                                                 <input class="form-control" type="password"
-                                                    placeholder="Confirmez le mot de pass" required>
+                                                    placeholder="Confirmez le mot de pass" name="pass3" required>
                                                 <label class="password-toggle-btn" aria-label="Show/hide password">
                                                     <input class="password-toggle-check" type="checkbox"><span
                                                         class="password-toggle-indicator"></span>
                                                 </label>
+                                                <span class="text-danger">@error('pass3'){{$message}} @enderror</span>
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <hr class="mt-2 mb-4">
                                         <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                            <div class="form-check d-block">
-                                                <button class="btn btn-secondary mt-3 mt-sm-0"
-                                                    type="button">Annuler</button>
+                                        <div class="form-check d-block">
+                                                <a href="/dashboard"><button class="btn btn-secondary mt-3 mt-sm-0"
+                                                        type="button">Annuler</button></a>
                                             </div>
-                                            <button class="btn btn-primary mt-3 mt-sm-0" type="button"><i
+                                            <button class="btn btn-primary mt-3 mt-sm-0" type="submit"><i
                                                     class="ai-save fs-lg me-2"></i>Enregistrer</button>
                                         </div>
                                     </div>

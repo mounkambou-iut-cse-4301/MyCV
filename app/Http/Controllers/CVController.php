@@ -54,7 +54,7 @@ class CVController extends Controller
                     
                      return redirect('/dashboard');
                  }else{
-                     return back()->with('fail','Mot de passe incorrect');
+                     return back()->with('fail','Mot de pass incorrect');
                    }
                 }
         }
@@ -832,8 +832,35 @@ class CVController extends Controller
     } 
 
 
-    function modifier_pass(){
-        return view('/layouts/modifier_pass');
+
+    function modifier_pass(Request $req){
+        if($req->isMethod('get')){
+            return view('/layouts/modifier_pass');
+        }else if($req->isMethod('post')){
+            $req->validate([
+                'pass1'=>'required',
+                'pass2'=>'required|min:5|max:12',
+                'pass3'=>'required|min:5|max:12',
+             ]);
+             $userInfo=Utilisateur::where('id',session('LoggedUser'))->first();
+             if(!(Hash::check($req->pass1,$userInfo->password))){
+                return back()->with('fail','Mot de pass incorrect');
+           }else{
+               if($req->pass2!==$req->pass3){
+                return back()->with('fail','Veuillez bien confirmez votre nouveau mot de pass');
+               }else{
+                $update=Utilisateur::where('id',session('LoggedUser'))
+                ->update([
+                 'password'=>Hash::make($req->pass2),
+                ]);
+                if($update){
+                    return back()->with('success',"Le mot de pass a été modifié avec succès.");
+                  }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                  }
+               }
+             }
+        }
     }
 
 }
