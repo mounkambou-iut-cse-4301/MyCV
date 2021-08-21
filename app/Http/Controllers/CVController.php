@@ -21,6 +21,9 @@ use App\Models\OeuvreCreative;
 use App\Models\PrixDistinction;
 use App\Models\Publication;
 use App\Models\Projet;
+use App\Models\Recommandation;
+use App\Models\ReseauAdhesion;
+
 use DB;
 
 class CVController extends Controller
@@ -757,14 +760,76 @@ class CVController extends Controller
     }   
 
 
-
-    function recommandation(){
-        return view('/layouts/recommandation');
+    //Recommandation
+    function recommandation(Request $req){
+        if($req->isMethod('get')){
+            $info=Recommandation::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/recommandation')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'nom'=>'required',
+             ]);
+             $info= new Recommandation;
+                $info->nom=$req->nom;
+                $info->role=$req->role;
+                $info->adresse_electronique=$req->adresse_electronique;
+                $info->numero=$req->numero;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
 
-    function reseau_adhesion(){
-        return view('/layouts/reseau_adhesion');
+    function delete_recommandation($id){
+       
+        $delete=Recommandation::where('id',$id)->delete();
+        return redirect()->back();
+    } 
+
+    //Reseau Adhesion
+    function reseau_adhesion(Request $req){
+        if($req->isMethod('get')){
+            $info= ReseauAdhesion::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/reseau_adhesion')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'titre'=>'required',
+             ]);
+             if($req->debut_date > $req->fin_date){
+                return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
+             }
+             $info= new ReseauAdhesion;
+                $info->titre=$req->titre;
+                $info->lieu=$req->lieu;
+                $info->debut_date=$req->debut_date;
+                $info->fin_date=$req->fin_date;
+                $info->lien=$req->lien;
+                $info->description=$req->description;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
     }
+
+    function delete_reseau_adhesion($id){
+       
+        $delete=ReseauAdhesion::where('id',$id)->delete();
+        return redirect()->back();
+    } 
 
 
     function modifier_pass(){

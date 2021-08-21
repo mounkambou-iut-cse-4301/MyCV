@@ -39,61 +39,94 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="">
+                            <form action="{{route('recommandation')}}" method="post">
                                 <div class="row">
                                     <h3
                                         class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3 text-md-center mb-2">
                                         Recommandations
 
                                     </h3>
+                                    @if(Session::get('success'))
+                                    <div class="alert alert-success">
+                                        {{Session::get('success')}}
+                                    </div>
+                                    @endif
+                                    @if(Session::get('fail'))
+                                    <div class="alert alert-danger">
+                                        {{Session::get('fail')}}
+                                    </div>
+                                    @endif
+                                    @csrf
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-fn">Nom</label>
-                                            <input class="form-control" type="text" id="account-fn">
+                                            <label class="form-label px-0" for="account-fn">Nom<sup
+                                                    class="text-danger ms-1">*</sup></label>
+                                            <input class="form-control" name="nom" type="text" id="account-fn" required>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-fn">Rôle</label>
-                                            <input class="form-control" placeholder="Par ex: Partenaire" type="text" id="account-fn">
+                                            <input class="form-control" name="role" placeholder="Par ex: Partenaire" type="text" id="account-fn">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-fn">Adresse électronique</label>
-                                            <input class="form-control" placeholder="abdel@gmail.com" type="email" id="account-fn">
+                                            <input class="form-control" name="adresse_electronique" placeholder="charles@gmail.com" type="email" id="account-fn">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-fn">Numéro de téléphone</label>
-                                            <input class="form-control" type="number" id="account-fn">
+                                            <input class="form-control" name="numero" type="number" id="account-fn">
                                         </div>
                                     </div>
                                 
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label" for="cont-message">Description<sup
-                                                    class="text-danger ms-1">*</sup></label>
-                                            <textarea class="form-control" placeholder="Saisir ici la description..." id="cont-message" rows="5"
-                                                required></textarea>
+                                            <label class="form-label" for="cont-message">Description</label>
+                                            <textarea class="form-control" name="description" placeholder="Saisir ici la description..." id="cont-message" rows="5"
+                                                ></textarea>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
                                             <label class="form-label px-0" for="account-ln">Lien vers le fichier ou la vidéo</label>
-                                            <input class="form-control" type="text" id="account-ln" >
+                                            <input class="form-control" name="lien" type="text" id="account-ln" >
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <hr class="mt-2 mb-4">
                                         <div class="d-flex flex-wrap justify-content-end align-items-center">
-                                            <button class="btn btn-primary mt-3 mt-sm-0" type="button"><i
+                                            <button class="btn btn-primary mt-3 mt-sm-0" type="submit"><i
                                                     class="ai-save fs-lg me-2"></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                            <div class="table-responsive fs-md mt-5">
+                                <table class="table table-hover mb-0">
+                                    <tbody>
+                                        @foreach($info as $inf)
+                                        <tr>
+                                            <td class="py-3 align-middle">
+                                                <p class="fw-bold">{{$inf->nom}}, {{$inf->role}}</p>
+                                                <span>{{$inf->adresse_electronique}}, {{$inf->numero}}</span><br>
+                                                <span>{{$inf->description}}</span><br>
+                                                <span> <a href="{{$inf->lien}}" target="_blank">{{$inf->lien}}</a></span>
+                                            </td>
+                                            <td class="py-3 align-middle">{{$inf->date}}</td>
+                                            <td class="py-3 align-middle"><a class="nav-link-style text-danger" href="/delete_recommandation/{{$inf->id}}  "
+                                                    data-bs-toggle="tooltip" title="Remove">
+                                                    <div class="ai-trash-2"></div>
+                                                </a></td>
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
