@@ -63,7 +63,6 @@ Route::get('/delete_loisir/{id?}', [CVController::class,'delete_loisir'])->name(
 Route::match(['get','post'],'/oeuvre_creative',[CVController::class,'oeuvre_creative'])->name('oeuvre_creative');
 Route::get('/delete_oeuvre_creative/{id?}', [CVController::class,'delete_oeuvre_creative'])->name('delete_oeuvre_creative');
 
-Route::match(['get','post'],'/permis_conduire',[CVController::class,'permis_conduire'])->name('permis_conduire');
 Route::match(['get','post'],'/prix_distinction',[CVController::class,'prix_distinction'])->name('prix_distinction');
 Route::get('/delete_prix_distinction/{id?}', [CVController::class,'delete_prix_distinction'])->name('delete_prix_distinction');
 
@@ -78,6 +77,9 @@ Route::get('/delete_recommandation/{id?}', [CVController::class,'delete_recomman
 
 Route::match(['get','post'],'/reseau_adhesion',[CVController::class,'reseau_adhesion'])->name('reseau_adhesion');
 Route::get('/delete_reseau_adhesion/{id?}', [CVController::class,'delete_reseau_adhesion'])->name('delete_reseau_adhesion');
+
+Route::match(['get','post'],'/permis_conduire',[CVController::class,'permis_conduire'])->name('permis_conduire');
+Route::get('/delete_permis_conduire/{id?}', [CVController::class,'delete_permis_conduire'])->name('delete_permis_conduire');
 
 Route::match(['get','post'],'/modifier_pass',[CVController::class,'modifier_pass'])->name('modifier_pass');
 });

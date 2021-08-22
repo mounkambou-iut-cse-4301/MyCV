@@ -23,6 +23,8 @@ use App\Models\Publication;
 use App\Models\Projet;
 use App\Models\Recommandation;
 use App\Models\ReseauAdhesion;
+use App\Models\PermisConduire;
+
 
 use DB;
 
@@ -645,9 +647,42 @@ class CVController extends Controller
         return redirect()->back();
     }
 
+   //Permis Conduire
+    function permis_conduire(Request $req){
+        if($req->isMethod('get')){
+            $info= PermisConduire::where('utilisateur_id',session('LoggedUser'))->orderBy('created_at','DESC')->get();
+            
+                return view('/layouts/permis_conduire')->with('info',$info);
+            
+        } else if($req->isMethod('post')){
+            $req->validate([
+                'permis'=>'required',
+                'niveau'=>'required',
+             ]);
+             $check=PermisConduire::where('permis',$req->permis)
+                                   ->where('niveau',$req->niveau)->first();
+             
+             if($check !== null){
+                return back()->with('fail',"Vous avez déjà ces informations dans la base de données");
 
-    function permis_conduire(){
-        return view('/layouts/permis_conduire');
+             }
+             $info= new PermisConduire;
+                $info->permis=$req->permis;
+                $info->niveau=$req->niveau;
+                $info->utilisateur_id=session('LoggedUser');
+                $save=$info->save();
+                if($save){
+                    return back()->with('success',"Vos informations ont été ajoutées avec succès dans la base de données");
+                 }else{
+                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+                   }
+        }
+    }
+
+    function delete_permis_conduire($id){
+       
+        $delete=PermisConduire::where('id',$id)->delete();
+        return redirect()->back();
     }
 
    
