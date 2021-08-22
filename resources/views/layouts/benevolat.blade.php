@@ -31,11 +31,14 @@
                             </div>
                             <!-- Content-->
                             <div class="bg-secondary rounded-3 p-4 mb-4">
-                                <div class="d-block d-sm-flex align-items-center"><img
+                            <div class="d-block d-sm-flex align-items-center">                                    
+                                   @if(getImage())
+                                    <img
                                         class="d-block rounded-circle mx-sm-0 mx-auto mb-3 mb-sm-0"
-                                        src="img/dashboard/avatar/main.jpg" alt="Amanda Wilson" width="110">
+                                        src="{{asset('storage/images/'.getImage())}}" alt="{{getName()}}" width="50" >
+                                    @endif
                                     <div class="ps-sm-3 text-center text-sm-start">
-                                        <div class="p mb-0 fs-ms text-muted fw-bolder">Hello Amanda Wilson.</div>
+                                        <div class="p mb-0 fs-ms text-muted fw-bolder">{{getName()}}</div>
                                     </div>
                                 </div>
                             </div>

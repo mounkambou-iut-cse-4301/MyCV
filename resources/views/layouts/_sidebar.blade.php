@@ -1,9 +1,12 @@
 <!-- Sidebar-->
 <div class="col-lg-4 mb-4 mb-lg-0">
     <div class="bg-light rounded-3 shadow-lg">
-        <div class="px-4 py-4 mb-1 text-center"><img class="d-block rounded-circle mx-auto my-2"
-                src="img/dashboard/avatar/main.jpg" at="Amanda Wilson" width="110">
-            <h6 class="mb-0 pt-1">Amanda Wilson</h6><span class="text-muted fs-sm">@amanda_w</span>
+        <div class="px-4 py-4 mb-1 text-center">
+        @if(getImage())
+        <img class="d-block rounded-circle mx-auto my-2"
+                src="{{asset('storage/images/'.getImage())}}" alt="{{getName()}}" width="80">
+                @endif
+            <h6 class="mb-0 pt-1">{{getName()}}</h6><span class="text-muted fs-sm">{{getEmail()}}</span>
         </div>
         <div class="d-lg-none px-4 pb-4 text-center"><a class="btn btn-primary px-5 mb-2" href="#account-menu"
                 data-bs-toggle="collapse"><i class="ai-menu me-2"></i>Account
