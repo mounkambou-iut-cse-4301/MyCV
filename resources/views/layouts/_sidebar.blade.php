@@ -4,7 +4,7 @@
         <div class="px-4 py-4 mb-1 text-center">
         @if(getImage())
         <img class="d-block rounded-circle mx-auto my-2"
-                src="{{asset('storage/images/'.getImage())}}" alt="{{getName()}}" width="80">
+                src="{{asset('storage/images/'.getImage())}}" alt="{{getName()}}" width="200">
                 @endif
             <h6 class="mb-0 pt-1">{{getName()}}</h6><span class="text-muted fs-sm">{{getEmail()}}</span>
         </div>
