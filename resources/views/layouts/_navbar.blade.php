@@ -6,8 +6,14 @@
               <a class="btn btn-primary m-3" href="{{route('login')}}" rel="noopener">Connexion</a>
               <a class="btn btn-primary" href="{{route('register')}}" rel="noopener">S'inscrire</a>
           @else
-           
-           <a class="btn btn-danger" href="{{route('logout')}}" rel="noopener">Déconnexion</a>
+             @if(getImage())
+        <div class="navbar-tool dropdown"><a class="navbar-tool-icon-box" href="#"><img class="navbar-tool-icon-box-img"  src="{{asset('storage/images/'.getImage())}}" alt="{{getName()}}"><a class="navbar-tool-label dropdown-toggle" href="#"><small>Hello,</small>{{getName()}}</a>
+              <ul class="dropdown-menu dropdown-menu-end" style="width: 15rem;">
+                <li><a class="dropdown-item d-flex align-items-center" href="{{route('logout')}}"><i class="ai-log-out fs-base opacity-60 me-2"></i>Déconnexion</a></li>
+              </ul>
+            </div>
+            @endif
+          
           @endif
         </div>
           <div class="offcanvas offcanvas-collapse order-lg-2" id="primaryMenu">

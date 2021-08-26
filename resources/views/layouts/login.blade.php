@@ -6,7 +6,7 @@
         <!-- Navbar (Floating dark)-->
         @include('layouts/_navbar')
         <!-- Page content-->
-        <section class="container d-flex justify-content-center align-items-center pt-7 pb-4" style="flex: 1 0 auto;">
+        <section class="container d-flex justify-content-center align-items-center pt-5 mt-7 pb-4" style="flex: 1 0 auto;">
             <div class="signin-form mt-3">
                 <div class="signin-form-inner">
                     <!-- Sign in view-->
