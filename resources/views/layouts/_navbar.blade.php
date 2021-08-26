@@ -7,7 +7,8 @@
               <a class="btn btn-primary" href="{{route('register')}}" rel="noopener">S'inscrire</a>
           @else
              @if(getImage())
-        <div class="navbar-tool dropdown"><a class="navbar-tool-icon-box" href="#"><img class="navbar-tool-icon-box-img"  src="{{asset('storage/images/'.getImage())}}" alt="{{getName()}}"><a class="navbar-tool-label dropdown-toggle" href="#"><small>Hello,</small>{{getName()}}</a>
+             <div class="navbar-tool dropdown"><a class="navbar-tool-icon-box" href="#">
+               <img class="navbar-tool-icon-box-img"  src="{{asset('storage/images/'.getImage())}}" alt="{{getName()}}"><a class="navbar-tool-label dropdown-toggle" href="#"><small>Hello,</small>{{getName()}}</a>
               <ul class="dropdown-menu dropdown-menu-end" style="width: 15rem;">
                 <li><a class="dropdown-item d-flex align-items-center" href="{{route('logout')}}"><i class="ai-log-out fs-base opacity-60 me-2"></i>Déconnexion</a></li>
               </ul>

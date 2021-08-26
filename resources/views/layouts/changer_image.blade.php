@@ -1,4 +1,4 @@
-@extends('layouts/master',['title'=>'Compétences numériques'])
+@extends('layouts/master',['title'=>'Informations personelles'])
 
 @section('content')
 
@@ -31,12 +31,11 @@
                             </div>
                             <!-- Content-->
                             @include('layouts\_card_image')
-                            <form action="{{route('competence_num')}}" method="post">
+
+                            <form action="{{route('changer_image')}}" method="post" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row">
-                                    <h3
-                                        class="d-block bg-secondary fs-sm fw-semibold text-muted mb-0 px-4 py-3 text-md-center mb-2">
-                                        Compétences numériques
-                                    </h3>
+                                    
                                     @if(Session::get('success'))
                                     <div class="alert alert-success">
                                         {{Session::get('success')}}
@@ -47,49 +46,29 @@
                                         {{Session::get('fail')}}
                                     </div>
                                     @endif
-                                    @csrf
                                     <div class="col-sm-12">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-fn">Groupe</label>
-                                            <input class="form-control" name="groupe" type="text" id="account-fn" required>
+
+                                            <label for="formFile" class="form-label">Téléchargez une image jpeg, jpg, gif, svg, png. 300 x 300.</label>
+                                            <input class="form-control form-control" name="nom_photo" id="formFile"
+                                                type="file">
+                                                <span class="text-danger">@error('nom_photo'){{$message}} @enderror</span> 
+
                                         </div>
                                     </div>
-                                    <div class="col-sm-12">
-                                        <div class="mb-3 pb-1">
-                                            <label class="form-label" for="cont-message">Liste</label>
-                                            <textarea class="form-control" name="liste" placeholder="Listez vos compétences" id="cont-message" rows="5"
-                                                required></textarea>
-                                        </div>
-                                    </div>
-                                    
                                     <div class="col-12">
                                         <hr class="mt-2 mb-4">
-                                        <div class="d-flex flex-wrap justify-content-end align-items-center">
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                            <div class="form-check d-block">
+                                                <a href="/dashboard"><button class="btn btn-secondary mt-3 mt-sm-0"
+                                                        type="button">Annuler</button></a>
+                                            </div>
                                             <button class="btn btn-primary mt-3 mt-sm-0" type="submit"><i
                                                     class="ai-save fs-lg me-2"></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-                            <div class="table-responsive fs-md mt-5">
-                                <table class="table table-hover mb-0">
-                                    <tbody>
-                                        @foreach($info as $inf)
-                                        <tr>
-                                            <td class="py-3 align-middle">
-                                                <span class="fw-bold">{{$inf->groupe}}</span>
-                                                <p>{{$inf->liste}}</p>
-                                            </td>
-                                            <td class="py-3 align-middle"><a class="nav-link-style text-danger" href="/delete_comp_num/{{$inf->id}}  "
-                                                    data-bs-toggle="tooltip" title="Remove">
-                                                    <div class="ai-trash-2"></div>
-                                                </a></td>
-                                        </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
                     </div>
                 </div>

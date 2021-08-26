@@ -30,18 +30,7 @@
                                 <h1 class="h3 mb-2 text-nowrap">Profile info</h1>
                             </div>
                             <!-- Content-->
-                            <div class="bg-secondary rounded-3 p-4 mb-4">
-                                <div class="d-block d-sm-flex align-items-center"> 
-                                    @if(getImage())
-                                    <img
-                                        class="d-block rounded-circle mx-sm-0 mx-auto mb-3 mb-sm-0"
-                                        src="{{asset('storage/images/'.getImage())}}" alt="{{getName()}}" width="50" >
-                                    @endif
-                                    <div class="ps-sm-3 text-center text-sm-start">
-                                        <div class="p mb-0 fs-ms text-muted fw-bolder">{{getName()}}</div>
-                                    </div>
-                                </div>
-                            </div>
+                            @include('layouts\_card_image')
                             <form action="{{route('permis_conduire')}}" method="post">
                                 <div class="row">
                                     <h3

@@ -125,7 +125,9 @@ class CVController extends Controller
                 'pays'=>'required',
                 'ville'=>'required',
                 'localite'=>'required',
+                'nom_photo'=>'max:500|mimes:jpeg,jpg,gif,svg,png| dimensions:width=300,height=300',
              ]);
+
              
              $check= InformationPersonelle::where('utilisateur_id',session('LoggedUser'))->first();
             
@@ -164,6 +166,7 @@ class CVController extends Controller
                    return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
                   }
              }else{
+                
                  
                 $update=InformationPersonelle::where('utilisateur_id',session('LoggedUser'))
                                ->update([
@@ -898,4 +901,24 @@ class CVController extends Controller
         }
     }
 
+    function changer_image(Request $req){
+        if($req->isMethod('get')){
+         return view('/layouts/changer_image');
+        }else if($req->isMethod('post')){
+            $req->validate([
+                'nom_photo'=>'required|max:500|mimes:jpeg,jpg,gif,svg,png| dimensions:width=300,height=300',
+             ]);
+             $nom_photo=$req->file('nom_photo')->getClientOriginalName();
+            $req->file('nom_photo')->storeAs('public/images/', $nom_photo);
+             $update=InformationPersonelle::where('utilisateur_id',session('LoggedUser'))
+                                          ->update([
+                                            'nom_photo'=>$nom_photo,
+                                          ]);
+               if($update){
+                  return back()->with('success',"L'image' a été enregistrée avec succès dans la base de données");
+                }else{
+                  return back()->with('fail',"Quelque chose s'est mal passé, réessayez plus tard");
+               }
+        }
+    }
 }

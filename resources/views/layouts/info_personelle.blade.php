@@ -30,18 +30,7 @@
                                 <h1 class="h3 mb-2 text-nowrap">Profile info</h1>
                             </div>
                             <!-- Content-->
-                            <div class="bg-secondary rounded-3 p-4 mb-4">
-                                <div class="d-block d-sm-flex align-items-center"> 
-                                    @if(getImage())
-                                    <img
-                                        class="d-block rounded-circle mx-sm-0 mx-auto mb-3 mb-sm-0"
-                                        src="{{asset('storage/images/'.getImage())}}" alt="{{getName()}}" width="50" >
-                                    @endif
-                                    <div class="ps-sm-3 text-center text-sm-start">
-                                        <div class="p mb-0 fs-ms text-muted fw-bolder">{{getName()}}</div>
-                                    </div>
-                                </div>
-                            </div>
+                            @include('layouts\_card_image')
                             <form action="{{route('info_personelle')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
@@ -121,9 +110,10 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
 
-                                            <label for="formFile" class="form-label">Ajouter une photo</label>
+                                            <label for="formFile" class="form-label">Téléchargez une image jpeg, jpg, gif, svg, png. 300 x 300.</label>
                                             <input class="form-control form-control-" name="nom_photo" id="formFile"
                                                 type="file">
+                                                <span class="text-danger">@error('nom_photo'){{$message}} @enderror</span> 
 
                                         </div>
                                     </div>
@@ -277,9 +267,10 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
 
-                                            <label for="formFile" class="form-label">Ajouter une photo</label>
+                                            <label for="formFile" class="form-label">Téléchargez une image jpeg, jpg, gif, svg, png. 300 x 300.</label>
                                             <input class="form-control form-control" name="nom_photo" id="formFile"
                                                 type="file" value="{{$info->nom_photo}}">
+                                                <span class="text-danger">@error('nom_photo'){{$message}} @enderror</span> 
 
                                         </div>
                                     </div>

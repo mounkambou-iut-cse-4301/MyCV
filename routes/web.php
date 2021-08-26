@@ -81,5 +81,9 @@ Route::get('/delete_reseau_adhesion/{id?}', [CVController::class,'delete_reseau_
 Route::match(['get','post'],'/permis_conduire',[CVController::class,'permis_conduire'])->name('permis_conduire');
 Route::get('/delete_permis_conduire/{id?}', [CVController::class,'delete_permis_conduire'])->name('delete_permis_conduire');
 
+
+Route::match(['get','post'],'/changer_image', [CVController::class,'changer_image'])->name('changer_image');
+
+
 Route::match(['get','post'],'/modifier_pass',[CVController::class,'modifier_pass'])->name('modifier_pass');
 });
