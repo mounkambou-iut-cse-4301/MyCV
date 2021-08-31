@@ -162,13 +162,13 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="youtube">Youtube</label>
+                                            <label class="form-label px-0" for="youtube">Site Web</label>
                                             <input class="form-control" name="youtube" type="text" id="youtube">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="site_web">Site web</label>
+                                            <label class="form-label px-0" for="site_web">Github</label>
                                             <input class="form-control" name="site_web" type="text" id="site_web">
                                         </div>
                                     </div>
@@ -324,14 +324,14 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="youtube">Youtube</label>
+                                            <label class="form-label px-0" for="youtube">Site Web</label>
                                             <input class="form-control" name="youtube" type="text" id="youtube"
                                                 value="{{$info->youtube}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="site_web">Site web</label>
+                                            <label class="form-label px-0" for="site_web">Github</label>
                                             <input class="form-control" name="site_web" type="text" id="site_web"
                                                 value="{{$info->site_web}}">
                                         </div>

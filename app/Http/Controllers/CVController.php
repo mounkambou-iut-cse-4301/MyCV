@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use PDF;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -125,7 +126,7 @@ class CVController extends Controller
                 'pays'=>'required',
                 'ville'=>'required',
                 'localite'=>'required',
-                'nom_photo'=>'max:500|mimes:jpeg,jpg,gif,svg,png| dimensions:width=300,height=300',
+                'nom_photo'=>'max:500|mimes:jpeg,jpg,gif,svg,png| dimensions:width>=300,height>=300',
              ]);
 
              
@@ -221,7 +222,7 @@ class CVController extends Controller
             $req->validate([
                 'poste'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new ExperienceProfessionnelle;
@@ -248,6 +249,14 @@ class CVController extends Controller
         return redirect()->back();
     }
 
+    // function update_exp_pro($id){
+       
+    //     $edit=ExperienceProfessionnelle::find($id);
+    //     $update=1;
+        
+    //     return view('/layouts/experience_pro')->with('edit',$edit);
+    // }
+
 
       //Education et Formation
 
@@ -261,7 +270,7 @@ class CVController extends Controller
             $req->validate([
                 'qualification'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new EducationFormation;
@@ -367,7 +376,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new ActiviteSocialePolitique;
@@ -405,7 +414,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new Benevolat;
@@ -443,7 +452,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new CompetenceOrganisation;
@@ -480,7 +489,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new CompetenceGestion;
@@ -519,7 +528,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new CompetenceInterpersonnelle;
@@ -557,7 +566,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new ConferenceSeminaire;
@@ -625,7 +634,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new OeuvreCreative;
@@ -734,7 +743,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new Projet;
@@ -771,7 +780,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new Publication;
@@ -843,7 +852,7 @@ class CVController extends Controller
             $req->validate([
                 'titre'=>'required',
              ]);
-             if($req->debut_date > $req->fin_date){
+             if($req->debut_date > $req->fin_date && $req->fin_date!==null){
                 return back()->with('fail',"La date du début doit être inférieure à celle de la fin");
              }
              $info= new ReseauAdhesion;
@@ -921,4 +930,90 @@ class CVController extends Controller
                }
         }
     }
+
+    function cv_model_1(){
+         $info_perso=InformationPersonelle::where('utilisateur_id',session('LoggedUser'))->first();
+         $exp_pro=ExperienceProfessionnelle::where('utilisateur_id',session('LoggedUser'))->orderBy('debut_date','DESC')->get();
+         $edu=EducationFormation::where('utilisateur_id',session('LoggedUser'))->orderBy('debut_date','DESC')->get();
+         $comp_ling=CompetenceLinguistique::where('utilisateur_id',session('LoggedUser'))->get();
+         $comp_num=CompetenceNumerique::where('utilisateur_id',session('LoggedUser'))->get();
+         $act_social=ActiviteSocialePolitique::where('utilisateur_id',session('LoggedUser'))->get();
+         $benevolat=Benevolat::where('utilisateur_id',session('LoggedUser'))->get();
+         $comp_org=CompetenceOrganisation::where('utilisateur_id',session('LoggedUser'))->get();
+         $comp_gestion=CompetenceGestion::where('utilisateur_id',session('LoggedUser'))->get();
+         $comp_perso=CompetenceInterpersonnelle::where('utilisateur_id',session('LoggedUser'))->get();
+         $conf_semi=ConferenceSeminaire::where('utilisateur_id',session('LoggedUser'))->get();
+         $loisir=LoisirInteret::where('utilisateur_id',session('LoggedUser'))->get();
+         $oeuvre_creative=OeuvreCreative::where('utilisateur_id',session('LoggedUser'))->get();
+         $prix_dist=PrixDistinction::where('utilisateur_id',session('LoggedUser'))->get();
+         $publication=Publication::where('utilisateur_id',session('LoggedUser'))->get();
+         $projet=Projet::where('utilisateur_id',session('LoggedUser'))->get();
+         $recmmandation=Recommandation::where('utilisateur_id',session('LoggedUser'))->get();
+         $reseau_adh=ReseauAdhesion::where('utilisateur_id',session('LoggedUser'))->get();
+         $permis=PermisConduire::where('utilisateur_id',session('LoggedUser'))->get();
+         
+        
+        return view('/layouts/cv_model_1')->with('info_perso',$info_perso)
+                                          ->with('exp_pro',$exp_pro)
+                                          ->with('edu',$edu)
+                                          ->with('act_social',$act_social)
+                                          ->with('benevolat',$benevolat)
+                                          ->with('comp_ling',$comp_ling)
+                                          ->with('comp_num',$comp_num)
+                                          ->with('comp_org',$comp_org)
+                                          ->with('comp_gestion',$comp_gestion)
+                                          ->with('comp_perso',$comp_perso)
+                                          ->with('conf_semi',$conf_semi)
+                                          ->with('loisir',$loisir)
+                                          ->with('oeuvre_creative',$oeuvre_creative)
+                                          ->with('prix_dist',$prix_dist)
+                                          ->with('publication',$publication)
+                                          ->with('projet',$projet)
+                                          ->with('recmmandation',$recmmandation)
+                                          ->with('reseau_adh',$reseau_adh)
+                                          ->with('permis',$permis);
+    }
+    function cv_model_2(){
+        $info_perso=InformationPersonelle::where('utilisateur_id',session('LoggedUser'))->first();
+         $exp_pro=ExperienceProfessionnelle::where('utilisateur_id',session('LoggedUser'))->get();
+         $edu=EducationFormation::where('utilisateur_id',session('LoggedUser'))->get();
+         $comp_ling=CompetenceLinguistique::where('utilisateur_id',session('LoggedUser'))->get();
+         $comp_num=CompetenceNumerique::where('utilisateur_id',session('LoggedUser'))->get();
+         $act_social=ActiviteSocialePolitique::where('utilisateur_id',session('LoggedUser'))->get();
+         $benevolat=Benevolat::where('utilisateur_id',session('LoggedUser'))->get();
+         $comp_org=CompetenceOrganisation::where('utilisateur_id',session('LoggedUser'))->get();
+         $comp_gestion=CompetenceGestion::where('utilisateur_id',session('LoggedUser'))->get();
+         $comp_perso=CompetenceInterpersonnelle::where('utilisateur_id',session('LoggedUser'))->get();
+         $conf_semi=ConferenceSeminaire::where('utilisateur_id',session('LoggedUser'))->get();
+         $loisir=LoisirInteret::where('utilisateur_id',session('LoggedUser'))->get();
+         $oeuvre_creative=OeuvreCreative::where('utilisateur_id',session('LoggedUser'))->get();
+         $prix_dist=PrixDistinction::where('utilisateur_id',session('LoggedUser'))->get();
+         $publication=Publication::where('utilisateur_id',session('LoggedUser'))->get();
+         $projet=Projet::where('utilisateur_id',session('LoggedUser'))->get();
+         $recmmandation=Recommandation::where('utilisateur_id',session('LoggedUser'))->get();
+         $reseau_adh=ReseauAdhesion::where('utilisateur_id',session('LoggedUser'))->get();
+         $permis=PermisConduire::where('utilisateur_id',session('LoggedUser'))->get();
+        
+        return view('/layouts/cv_model_2')->with('info_perso',$info_perso)
+                                          ->with('exp_pro',$exp_pro)
+                                          ->with('edu',$edu)
+                                          ->with('act_social',$act_social)
+                                          ->with('benevolat',$benevolat)
+                                          ->with('comp_ling',$comp_ling)
+                                          ->with('comp_num',$comp_num)
+                                          ->with('comp_org',$comp_org)
+                                          ->with('comp_gestion',$comp_gestion)
+                                          ->with('comp_perso',$comp_perso)
+                                          ->with('conf_semi',$conf_semi)
+                                          ->with('loisir',$loisir)
+                                          ->with('oeuvre_creative',$oeuvre_creative)
+                                          ->with('prix_dist',$prix_dist)
+                                          ->with('publication',$publication)
+                                          ->with('projet',$projet)
+                                          ->with('recmmandation',$recmmandation)
+                                          ->with('reseau_adh',$reseau_adh)
+                                          ->with('permis',$permis);
+    }
+
+    
 }

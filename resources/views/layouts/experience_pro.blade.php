@@ -116,7 +116,7 @@
                                             <td class="py-3 align-middle">{{$inf->debut_date}}-{{$inf->fin_date}}</td>
                                             
                                             <td class="py-3 align-middle">
-                                            <a class="nav-link-style me-2" href="#" data-bs-toggle="tooltip" title="Edit"><i class="ai-edit"></i></a>
+                                            <a class="nav-link-style me-2" href="/update_exp_pro/{{$inf->id}}" data-bs-toggle="tooltip" title="Edit"><i class="ai-edit"></i></a>
                                                 <a class="nav-link-style text-danger" href="/delete_exp_pro/{{$inf->id}}"
                                                     data-bs-toggle="tooltip" title="Remove">
                                                     <div class="ai-trash-2"></div>

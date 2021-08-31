@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CVController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::match(['get','post'],'/register',[CVController::class,'register'])->name(
 Route::get('/logout',[CVController::class,'logout'])->name('logout');
 
 Route::match(['get','post'],'/info_personelle',[CVController::class,'info_personelle'])->name('info_personelle');
+
 Route::match(['get','post'],'/experience_pro',[CVController::class,'experience_pro'])->name('experience_pro');
 Route::get('/delete_exp_pro/{id?}', [CVController::class,'delete_exp_pro'])->name('delete_exp_pro');
 
@@ -84,6 +86,10 @@ Route::get('/delete_permis_conduire/{id?}', [CVController::class,'delete_permis_
 
 Route::match(['get','post'],'/changer_image', [CVController::class,'changer_image'])->name('changer_image');
 
+Route::get('/cv_model_1', [CVController::class,'cv_model_1'])->name('cv_model_1');
+Route::get('/cv_model_2', [CVController::class,'cv_model_2'])->name('cv_model_2');
+
 
 Route::match(['get','post'],'/modifier_pass',[CVController::class,'modifier_pass'])->name('modifier_pass');
+
 });
