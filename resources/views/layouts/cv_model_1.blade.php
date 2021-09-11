@@ -186,8 +186,14 @@
                 <div class="skillset">
                 @foreach($comp_num as $comp_num)        
                     <div class="item">
-                        <h3 class="level-title">{{$comp_num->groupe}}</h3>
-                        <p>{{$comp_num->liste}}</p>
+                        <h3 class="level-title">{{$comp_num->technologie}}</h3>
+                        
+
+                        <div class="progress level-bar">
+						    <div class="progress-bar theme-progress-bar" role="progressbar" style="width:{{$comp_num->niveau}}%" aria-valuenow="{{$comp_num->niveau}}" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>  
+                        
+                        
                     </div><!--//item-->
                 @endforeach     
                 </div>  

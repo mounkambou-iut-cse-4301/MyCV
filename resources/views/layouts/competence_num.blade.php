@@ -48,17 +48,24 @@
                                     </div>
                                     @endif
                                     @csrf
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label px-0" for="account-fn">Groupe</label>
-                                            <input class="form-control" name="groupe" type="text" id="account-fn" required>
+                                            <label class="form-label px-0" for="account-fn">Technologie<sup
+                                                    class="text-danger ms-1">*</sup></label>
+                                            <input class="form-control" name="technologie" type="text" id="account-fn" required>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="mb-3 pb-1">
-                                            <label class="form-label" for="cont-message">Liste</label>
-                                            <textarea class="form-control" name="liste" placeholder="Listez vos compétences" id="cont-message" rows="5"
-                                                required></textarea>
+                                            <label class="form-label px-0" for="account-country">Niveau<sup
+                                                    class="text-danger ms-1">*</sup></label>
+                                            <select name="niveau" class="form-select" id="account-country" required>
+                                                <option value>Sélectiner dans la liste</option>
+                                                <option value="25">25%</option>
+                                                <option value="50">50%</option>
+                                                <option value="75">75%</option>
+                                                <option value="100">100%</option>
+                                            </select>
                                         </div>
                                     </div>
                                     
@@ -77,8 +84,12 @@
                                         @foreach($info as $inf)
                                         <tr>
                                             <td class="py-3 align-middle">
-                                                <span class="fw-bold">{{$inf->groupe}}</span>
-                                                <p>{{$inf->liste}}</p>
+                                                <span class="fw-bold">{{$inf->technologie}}</span>
+                                           
+                                            </td>
+                                            <td class="py-3 align-middle">
+                
+                                                <span>{{$inf->niveau}} %</span>
                                             </td>
                                             <td class="py-3 align-middle"><a class="nav-link-style text-danger" href="/delete_comp_num/{{$inf->id}}  "
                                                     data-bs-toggle="tooltip" title="Remove">

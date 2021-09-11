@@ -342,12 +342,13 @@ class CVController extends Controller
             
         } else if($req->isMethod('post')){
             $req->validate([
-                'groupe'=>'required',
-                'liste'=>'required',
+                'technologie'=>'required',
+                'niveau'=>'required',
              ]);
              $info= new CompetenceNumerique;
-                $info->groupe=$req->groupe;
-                $info->liste=$req->liste;
+                $info->technologie=$req->technologie;
+                $info->niveau=(int) $req->niveau;
+            
                 $info->utilisateur_id=session('LoggedUser');
                 $save=$info->save();
                 if($save){
